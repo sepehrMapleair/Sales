@@ -1,0 +1,1457 @@
+{
+  "packages": [
+    {
+      "name": "Eco Plus Package",
+      "variants": [
+        {
+          "size": "Eco Plus#1",
+          "units": [
+            {
+              "name": "Air Conditioner"
+            },
+            {
+              "name": "Furnace"
+            },
+            {
+              "name": "Humidifier"
+            },
+            {
+              "name": "Air Cleaner"
+            },
+            {
+              "name": "Smart Thermostat"
+            }
+          ],
+          "total_amount": 10410.3195,
+          "monthly_payment": 131.6472598638002,
+          "maple_care": 158.63825986380022
+        },
+        {
+          "size": "Eco Plus#2",
+          "units": [
+            {
+              "name": "Air Conditioner"
+            },
+            {
+              "name": "Furnace"
+            },
+            {
+              "name": "Humidifier"
+            },
+            {
+              "name": "Air Cleaner"
+            },
+            {
+              "name": "Smart Thermostat"
+            }
+          ],
+          "total_amount": 10950.838499999998,
+          "monthly_payment": 138.48257795891928,
+          "maple_care": 165.4735779589193
+        },
+        {
+          "size": "Eco Plus#3",
+          "units": [
+            {
+              "name": "Air Conditioner"
+            },
+            {
+              "name": "Furnace"
+            },
+            {
+              "name": "Humidifier"
+            },
+            {
+              "name": "Air Cleaner"
+            },
+            {
+              "name": "Smart Thermostat"
+            }
+          ],
+          "total_amount": 10898.338499999998,
+          "monthly_payment": 137.8186712322478,
+          "maple_care": 164.8096712322478
+        },
+        {
+          "size": "Eco Plus#4",
+          "units": [
+            {
+              "name": "Air Conditioner"
+            },
+            {
+              "name": "Furnace"
+            },
+            {
+              "name": "Humidifier"
+            },
+            {
+              "name": "Air Cleaner"
+            },
+            {
+              "name": "Smart Thermostat"
+            }
+          ],
+          "total_amount": 11138.82,
+          "monthly_payment": 140.8597623844393,
+          "maple_care": 167.8507623844393
+        },
+        {
+          "size": "Eco Plus#5",
+          "units": [
+            {
+              "name": "Air Conditioner"
+            },
+            {
+              "name": "Furnace"
+            },
+            {
+              "name": "Humidifier"
+            },
+            {
+              "name": "Air Cleaner"
+            },
+            {
+              "name": "Smart Thermostat"
+            }
+          ],
+          "total_amount": 12336.47625,
+          "monthly_payment": 156.00513458663295,
+          "maple_care": 182.99613458663293
+        }
+      ]
+    },
+    {
+      "name": "Hybrid Package",
+      "variants": [
+        {
+          "size": "Hybrid#1",
+          "units": [
+            {
+              "name": "Furnace"
+            },
+            {
+              "name": "Heat-Pump"
+            },
+            {
+              "name": "Smart Thermostat"
+            },
+            {
+              "name": "Humidifier"
+            },
+            {
+              "name": "Air Cleaner"
+            },
+            {
+              "name": "Tankless"
+            },
+            {
+              "name": "Ecobee Doorbell"
+            },
+            {
+              "name": "UV Light"
+            },
+            {
+              "name": "Duct Cleaning"
+            }
+          ],
+          "total_amount": 16593.275999999998,
+          "monthly_payment": 209.835953407939,
+          "maple_care": 251.217953407939
+        },
+        {
+          "size": "Hybrid#2",
+          "units": [
+            {
+              "name": "Furnace"
+            },
+            {
+              "name": "Heat-Pump"
+            },
+            {
+              "name": "Smart Thermostat"
+            },
+            {
+              "name": "Humidifier"
+            },
+            {
+              "name": "Air Cleaner"
+            },
+            {
+              "name": "Tankless"
+            },
+            {
+              "name": "Ecobee Doorbell"
+            },
+            {
+              "name": "UV Light"
+            },
+            {
+              "name": "Duct Cleaning"
+            }
+          ],
+          "total_amount": 17445.351,
+          "monthly_payment": 220.61115958181747,
+          "maple_care": 261.99315958181745
+        },
+        {
+          "size": "Hybrid#3",
+          "units": [
+            {
+              "name": "Furnace"
+            },
+            {
+              "name": "Heat-Pump"
+            },
+            {
+              "name": "Smart Thermostat"
+            },
+            {
+              "name": "Humidifier"
+            },
+            {
+              "name": "Air Cleaner"
+            },
+            {
+              "name": "Tankless"
+            },
+            {
+              "name": "Ecobee Doorbell"
+            },
+            {
+              "name": "UV Light"
+            },
+            {
+              "name": "Duct Cleaning"
+            }
+          ],
+          "total_amount": 18713.751,
+          "monthly_payment": 236.65114609820102,
+          "maple_care": 278.03314609820103
+        },
+        {
+          "size": "Hybrid#4",
+          "units": [
+            {
+              "name": "Furnace"
+            },
+            {
+              "name": "Heat-Pump"
+            },
+            {
+              "name": "Smart Thermostat"
+            },
+            {
+              "name": "Humidifier"
+            },
+            {
+              "name": "Air Cleaner"
+            },
+            {
+              "name": "Tankless"
+            },
+            {
+              "name": "Ecobee Doorbell"
+            },
+            {
+              "name": "UV Light"
+            },
+            {
+              "name": "Duct Cleaning"
+            }
+          ],
+          "total_amount": 27998.62275,
+          "monthly_payment": 354.06617107167153,
+          "maple_care": 395.44817107167154
+        },
+        {
+          "size": "Hybrid#5",
+          "units": [
+            {
+              "name": "Furnace"
+            },
+            {
+              "name": "Heat-Pump"
+            },
+            {
+              "name": "Smart Thermostat"
+            },
+            {
+              "name": "Humidifier"
+            },
+            {
+              "name": "Air Cleaner"
+            },
+            {
+              "name": "Tankless"
+            },
+            {
+              "name": "Ecobee Doorbell"
+            },
+            {
+              "name": "UV Light"
+            },
+            {
+              "name": "Duct Cleaning"
+            }
+          ],
+          "total_amount": 28581.89775,
+          "monthly_payment": 361.4421748049919,
+          "maple_care": 402.8241748049919
+        }
+      ]
+    },
+    {
+      "name": "Platinum Package",
+      "variants": [
+        {
+          "size": "Platinum#1",
+          "units": [
+            {
+              "name": "Furnace"
+            },
+            {
+              "name": "Heat-Pump"
+            },
+            {
+              "name": "Infinity Thermostat"
+            },
+            {
+              "name": "Steam Humidifier"
+            },
+            {
+              "name": "Air Cleaner"
+            },
+            {
+              "name": "Tankless"
+            },
+            {
+              "name": "Ecobee Doorbell"
+            },
+            {
+              "name": "UV Light"
+            },
+            {
+              "name": "Duct Cleaning"
+            }
+          ],
+          "total_amount": 28512.8865,
+          "monthly_payment": 360.56946941278227,
+          "maple_care": 401.9514694127823
+        },
+        {
+          "size": "Platinum#2",
+          "units": [
+            {
+              "name": "Furnace"
+            },
+            {
+              "name": "Heat-Pump"
+            },
+            {
+              "name": "Infinity Thermostat"
+            },
+            {
+              "name": "Steam Humidifier"
+            },
+            {
+              "name": "Air Cleaner"
+            },
+            {
+              "name": "Tankless"
+            },
+            {
+              "name": "Ecobee Doorbell"
+            },
+            {
+              "name": "UV Light"
+            },
+            {
+              "name": "Duct Cleaning"
+            }
+          ],
+          "total_amount": 32284.6965,
+          "monthly_payment": 408.26718428376967,
+          "maple_care": 449.64918428376967
+        },
+        {
+          "size": "Platinum#3",
+          "units": [
+            {
+              "name": "Furnace"
+            },
+            {
+              "name": "Heat-Pump"
+            },
+            {
+              "name": "Infinity Thermostat"
+            },
+            {
+              "name": "Steam Humidifier"
+            },
+            {
+              "name": "Air Cleaner"
+            },
+            {
+              "name": "Tankless"
+            },
+            {
+              "name": "Ecobee Doorbell"
+            },
+            {
+              "name": "UV Light"
+            },
+            {
+              "name": "Duct Cleaning"
+            }
+          ],
+          "total_amount": 33571.9965,
+          "monthly_payment": 424.5461772217549,
+          "maple_care": 465.9281772217549
+        },
+        {
+          "size": "Platinum#4",
+          "units": [
+            {
+              "name": "Furnace"
+            },
+            {
+              "name": "Heat-Pump"
+            },
+            {
+              "name": "Infinity Thermostat"
+            },
+            {
+              "name": "Steam Humidifier"
+            },
+            {
+              "name": "Air Cleaner"
+            },
+            {
+              "name": "Tankless"
+            },
+            {
+              "name": "Ecobee Doorbell"
+            },
+            {
+              "name": "UV Light"
+            },
+            {
+              "name": "Duct Cleaning"
+            }
+          ],
+          "total_amount": 34162.6215,
+          "monthly_payment": 432.0151278968093,
+          "maple_care": 473.3971278968093
+        },
+        {
+          "size": "Platinum#5",
+          "units": [
+            {
+              "name": "Furnace"
+            },
+            {
+              "name": "Heat-Pump"
+            },
+            {
+              "name": "Infinity Thermostat"
+            },
+            {
+              "name": "Steam Humidifier"
+            },
+            {
+              "name": "Air Cleaner"
+            },
+            {
+              "name": "Tankless"
+            },
+            {
+              "name": "Ecobee Doorbell"
+            },
+            {
+              "name": "UV Light"
+            },
+            {
+              "name": "Duct Cleaning"
+            }
+          ],
+          "total_amount": 34162.6215,
+          "monthly_payment": 432.0151278968093,
+          "maple_care": 473.3971278968093
+        }
+      ]
+    },
+    {
+      "name": "Elite Package",
+      "variants": [
+        {
+          "size": "Elite #1",
+          "units": [
+            {
+              "name": "Air Conditioner"
+            },
+            {
+              "name": "Furnace"
+            },
+            {
+              "name": "Infinity Thermostat"
+            },
+            {
+              "name": "Steam Humidifier"
+            },
+            {
+              "name": "Air Cleaner"
+            },
+            {
+              "name": "Tankless"
+            },
+            {
+              "name": "Ecobee Doorbell"
+            },
+            {
+              "name": "UV Light"
+            },
+            {
+              "name": "Duct Cleaning"
+            }
+          ],
+          "total_amount": 25963.0665,
+          "monthly_payment": 328.3248475118007,
+          "maple_care": 369.70684751180073
+        },
+        {
+          "size": "Elite #2",
+          "units": [
+            {
+              "name": "Air Conditioner"
+            },
+            {
+              "name": "Furnace"
+            },
+            {
+              "name": "Infinity Thermostat"
+            },
+            {
+              "name": "Steam Humidifier"
+            },
+            {
+              "name": "Air Cleaner"
+            },
+            {
+              "name": "Tankless"
+            },
+            {
+              "name": "Ecobee Doorbell"
+            },
+            {
+              "name": "UV Light"
+            },
+            {
+              "name": "Duct Cleaning"
+            }
+          ],
+          "total_amount": 25352.0715,
+          "monthly_payment": 320.5983010267978,
+          "maple_care": 361.9803010267978
+        },
+        {
+          "size": "Elite #3",
+          "units": [
+            {
+              "name": "Air Conditioner"
+            },
+            {
+              "name": "Furnace"
+            },
+            {
+              "name": "Infinity Thermostat"
+            },
+            {
+              "name": "Steam Humidifier"
+            },
+            {
+              "name": "Air Cleaner"
+            },
+            {
+              "name": "Tankless"
+            },
+            {
+              "name": "Ecobee Doorbell"
+            },
+            {
+              "name": "UV Light"
+            },
+            {
+              "name": "Duct Cleaning"
+            }
+          ],
+          "total_amount": 26817.504,
+          "monthly_payment": 339.12992948837945,
+          "maple_care": 380.51192948837945
+        },
+        {
+          "size": "Elite #4",
+          "units": [
+            {
+              "name": "Air Conditioner"
+            },
+            {
+              "name": "Furnace"
+            },
+            {
+              "name": "Infinity Thermostat"
+            },
+            {
+              "name": "Steam Humidifier"
+            },
+            {
+              "name": "Air Cleaner"
+            },
+            {
+              "name": "Tankless"
+            },
+            {
+              "name": "Ecobee Doorbell"
+            },
+            {
+              "name": "UV Light"
+            },
+            {
+              "name": "Duct Cleaning"
+            }
+          ],
+          "total_amount": 26885.754,
+          "monthly_payment": 339.99300823305236,
+          "maple_care": 381.37500823305237
+        },
+        {
+          "size": "Elite #5",
+          "units": [
+            {
+              "name": "Air Conditioner"
+            },
+            {
+              "name": "Furnace"
+            },
+            {
+              "name": "Infinity Thermostat"
+            },
+            {
+              "name": "Steam Humidifier"
+            },
+            {
+              "name": "Air Cleaner"
+            },
+            {
+              "name": "Tankless"
+            },
+            {
+              "name": "Ecobee Doorbell"
+            },
+            {
+              "name": "UV Light"
+            },
+            {
+              "name": "Duct Cleaning"
+            }
+          ],
+          "total_amount": 27450.129,
+          "monthly_payment": 347.13000554477105,
+          "maple_care": 388.51200554477106
+        },
+        {
+          "size": "Elite #6",
+          "units": [
+            {
+              "name": "Air Conditioner"
+            },
+            {
+              "name": "Furnace"
+            },
+            {
+              "name": "Infinity Thermostat"
+            },
+            {
+              "name": "Steam Humidifier"
+            },
+            {
+              "name": "Air Cleaner"
+            },
+            {
+              "name": "Tankless"
+            },
+            {
+              "name": "Ecobee Doorbell"
+            },
+            {
+              "name": "UV Light"
+            },
+            {
+              "name": "Duct Cleaning"
+            }
+          ],
+          "total_amount": 29290.516499999998,
+          "monthly_payment": 370.40325584824046,
+          "maple_care": 411.78525584824047
+        },
+        {
+          "size": "Elite #7",
+          "units": [
+            {
+              "name": "Air Conditioner"
+            },
+            {
+              "name": "Furnace"
+            },
+            {
+              "name": "Infinity Thermostat"
+            },
+            {
+              "name": "Steam Humidifier"
+            },
+            {
+              "name": "Air Cleaner"
+            },
+            {
+              "name": "Tankless"
+            },
+            {
+              "name": "Ecobee Doorbell"
+            },
+            {
+              "name": "UV Light"
+            },
+            {
+              "name": "Duct Cleaning"
+            }
+          ],
+          "total_amount": 30091.141499999998,
+          "monthly_payment": 380.52783342998094,
+          "maple_care": 421.90983342998095
+        }
+      ]
+    },
+    {
+      "name": "Furnace Package",
+      "variants": [
+        {
+          "size": "Furnace Package#1",
+          "units": [
+            {
+              "name": "Furnace"
+            },
+            {
+              "name": "Humidifier"
+            },
+            {
+              "name": "Air Cleaner"
+            },
+            {
+              "name": "Smart Thermostat"
+            },
+            {
+              "name": "UV Light"
+            },
+            {
+              "name": "Duct Cleaning"
+            },
+            {
+              "name": "Ecobee Doorbell"
+            }
+          ],
+          "total_amount": 6997.326,
+          "monthly_payment": 88.48708190692184,
+          "maple_care": 115.47808190692184
+        },
+        {
+          "size": "Furnace Package#2",
+          "units": [
+            {
+              "name": "Furnace"
+            },
+            {
+              "name": "Humidifier"
+            },
+            {
+              "name": "Air Cleaner"
+            },
+            {
+              "name": "Smart Thermostat"
+            },
+            {
+              "name": "UV Light"
+            },
+            {
+              "name": "Duct Cleaning"
+            },
+            {
+              "name": "Ecobee Doorbell"
+            }
+          ],
+          "total_amount": 7246.701,
+          "monthly_payment": 91.64063885861148,
+          "maple_care": 118.63163885861148
+        },
+        {
+          "size": "Furnace Package#3",
+          "units": [
+            {
+              "name": "Furnace"
+            },
+            {
+              "name": "Humidifier"
+            },
+            {
+              "name": "Air Cleaner"
+            },
+            {
+              "name": "Smart Thermostat"
+            },
+            {
+              "name": "UV Light"
+            },
+            {
+              "name": "Duct Cleaning"
+            },
+            {
+              "name": "Ecobee Doorbell"
+            }
+          ],
+          "total_amount": 7377.951,
+          "monthly_payment": 93.30040567529022,
+          "maple_care": 120.29140567529022
+        },
+        {
+          "size": "Furnace Package#4",
+          "units": [
+            {
+              "name": "Furnace"
+            },
+            {
+              "name": "Humidifier"
+            },
+            {
+              "name": "Air Cleaner"
+            },
+            {
+              "name": "Smart Thermostat"
+            },
+            {
+              "name": "UV Light"
+            },
+            {
+              "name": "Duct Cleaning"
+            },
+            {
+              "name": "Ecobee Doorbell"
+            }
+          ],
+          "total_amount": 8385.81975,
+          "monthly_payment": 106.04575506056639,
+          "maple_care": 133.0367550605664
+        },
+        {
+          "size": "Furnace Package#5",
+          "units": [
+            {
+              "name": "Furnace"
+            },
+            {
+              "name": "Humidifier"
+            },
+            {
+              "name": "Air Cleaner"
+            },
+            {
+              "name": "Smart Thermostat"
+            },
+            {
+              "name": "UV Light"
+            },
+            {
+              "name": "Duct Cleaning"
+            },
+            {
+              "name": "Ecobee Doorbell"
+            }
+          ],
+          "total_amount": 8711.975999999999,
+          "monthly_payment": 110.1702756000131,
+          "maple_care": 137.16127560001308
+        }
+      ]
+    },
+    {
+      "name": "Infinity Package",
+      "variants": [
+        {
+          "size": "Infinity Package #1",
+          "units": [
+            {
+              "name": "Air Conditioner"
+            },
+            {
+              "name": "Furnace"
+            },
+            {
+              "name": "Smart Thermostat"
+            },
+            {
+              "name": "Steam Humidifier"
+            },
+            {
+              "name": "Air Cleaner"
+            },
+            {
+              "name": "Tankless"
+            },
+            {
+              "name": "Ecobee Doorbell"
+            },
+            {
+              "name": "UV Light"
+            },
+            {
+              "name": "Duct Cleaning"
+            }
+          ],
+          "total_amount": 24993.391499999998,
+          "monthly_payment": 316.06249027017805,
+          "maple_care": 357.44449027017805
+        },
+        {
+          "size": "Infinity Package #2",
+          "units": [
+            {
+              "name": "Air Conditioner"
+            },
+            {
+              "name": "Furnace"
+            },
+            {
+              "name": "Smart Thermostat"
+            },
+            {
+              "name": "Steam Humidifier"
+            },
+            {
+              "name": "Air Cleaner"
+            },
+            {
+              "name": "Tankless"
+            },
+            {
+              "name": "Ecobee Doorbell"
+            },
+            {
+              "name": "UV Light"
+            },
+            {
+              "name": "Duct Cleaning"
+            }
+          ],
+          "total_amount": 26491.2165,
+          "monthly_payment": 335.00374918211605,
+          "maple_care": 376.38574918211606
+        },
+        {
+          "size": "Infinity Package #3",
+          "units": [
+            {
+              "name": "Air Conditioner"
+            },
+            {
+              "name": "Furnace"
+            },
+            {
+              "name": "Smart Thermostat"
+            },
+            {
+              "name": "Steam Humidifier"
+            },
+            {
+              "name": "Air Cleaner"
+            },
+            {
+              "name": "Tankless"
+            },
+            {
+              "name": "Ecobee Doorbell"
+            },
+            {
+              "name": "UV Light"
+            },
+            {
+              "name": "Duct Cleaning"
+            }
+          ],
+          "total_amount": 26832.4665,
+          "monthly_payment": 339.3191429054808,
+          "maple_care": 380.7011429054808
+        },
+        {
+          "size": "Infinity Package #4",
+          "units": [
+            {
+              "name": "Air Conditioner"
+            },
+            {
+              "name": "Furnace"
+            },
+            {
+              "name": "Smart Thermostat"
+            },
+            {
+              "name": "Steam Humidifier"
+            },
+            {
+              "name": "Air Cleaner"
+            },
+            {
+              "name": "Tankless"
+            },
+            {
+              "name": "Ecobee Doorbell"
+            },
+            {
+              "name": "UV Light"
+            },
+            {
+              "name": "Duct Cleaning"
+            }
+          ],
+          "total_amount": 27998.62275,
+          "monthly_payment": 354.06617107167153,
+          "maple_care": 395.44817107167154
+        },
+        {
+          "size": "Infinity Package #5",
+          "units": [
+            {
+              "name": "Air Conditioner"
+            },
+            {
+              "name": "Furnace"
+            },
+            {
+              "name": "Smart Thermostat"
+            },
+            {
+              "name": "Steam Humidifier"
+            },
+            {
+              "name": "Air Cleaner"
+            },
+            {
+              "name": "Tankless"
+            },
+            {
+              "name": "Ecobee Doorbell"
+            },
+            {
+              "name": "UV Light"
+            },
+            {
+              "name": "Duct Cleaning"
+            }
+          ],
+          "total_amount": 28581.89775,
+          "monthly_payment": 361.4421748049919,
+          "maple_care": 402.8241748049919
+        },
+        {
+          "size": "Infinity Package #6",
+          "units": [
+            {
+              "name": "Air Conditioner"
+            },
+            {
+              "name": "Furnace"
+            },
+            {
+              "name": "Smart Thermostat"
+            },
+            {
+              "name": "Steam Humidifier"
+            },
+            {
+              "name": "Air Cleaner"
+            },
+            {
+              "name": "Tankless"
+            },
+            {
+              "name": "Ecobee Doorbell"
+            },
+            {
+              "name": "UV Light"
+            },
+            {
+              "name": "Duct Cleaning"
+            }
+          ],
+          "total_amount": 29753.5665,
+          "monthly_payment": 376.2589131774832,
+          "maple_care": 417.6409131774832
+        },
+        {
+          "size": "Infinity Package #7",
+          "units": [
+            {
+              "name": "Air Conditioner"
+            },
+            {
+              "name": "Furnace"
+            },
+            {
+              "name": "Smart Thermostat"
+            },
+            {
+              "name": "Steam Humidifier"
+            },
+            {
+              "name": "Air Cleaner"
+            },
+            {
+              "name": "Tankless"
+            },
+            {
+              "name": "Ecobee Doorbell"
+            },
+            {
+              "name": "UV Light"
+            },
+            {
+              "name": "Duct Cleaning"
+            }
+          ],
+          "total_amount": 28982.8665,
+          "monthly_payment": 366.5127624299455,
+          "maple_care": 407.8947624299455
+        }
+      ]
+    },
+    {
+      "name": "Eco Package",
+      "variants": [
+        {
+          "size": "Eco Package #1",
+          "units": [
+            {
+              "name": "Air Conditioner"
+            },
+            {
+              "name": "Furnace"
+            },
+            {
+              "name": "Humidifier"
+            },
+            {
+              "name": "Air Cleaner"
+            },
+            {
+              "name": "Smart Thermostat"
+            },
+            {
+              "name": "Ecobee Doorbell"
+            },
+            {
+              "name": "UV Light"
+            },
+            {
+              "name": "Duct Cleaning"
+            }
+          ],
+          "total_amount": 9759.3195,
+          "monthly_payment": 123.41481645307357,
+          "maple_care": 164.79681645307357
+        },
+        {
+          "size": "Eco Package #2",
+          "units": [
+            {
+              "name": "Air Conditioner"
+            },
+            {
+              "name": "Furnace"
+            },
+            {
+              "name": "Humidifier"
+            },
+            {
+              "name": "Air Cleaner"
+            },
+            {
+              "name": "Smart Thermostat"
+            },
+            {
+              "name": "Ecobee Doorbell"
+            },
+            {
+              "name": "UV Light"
+            },
+            {
+              "name": "Duct Cleaning"
+            }
+          ],
+          "total_amount": 10294.588499999998,
+          "monthly_payment": 130.18374387552552,
+          "maple_care": 171.56574387552553
+        },
+        {
+          "size": "Eco Package #3",
+          "units": [
+            {
+              "name": "Air Conditioner"
+            },
+            {
+              "name": "Furnace"
+            },
+            {
+              "name": "Humidifier"
+            },
+            {
+              "name": "Air Cleaner"
+            },
+            {
+              "name": "Smart Thermostat"
+            },
+            {
+              "name": "Ecobee Doorbell"
+            },
+            {
+              "name": "UV Light"
+            },
+            {
+              "name": "Duct Cleaning"
+            }
+          ],
+          "total_amount": 10110.838499999998,
+          "monthly_payment": 127.86007033217525,
+          "maple_care": 169.24207033217525
+        },
+        {
+          "size": "Eco Package #4",
+          "units": [
+            {
+              "name": "Air Conditioner"
+            },
+            {
+              "name": "Furnace"
+            },
+            {
+              "name": "Humidifier"
+            },
+            {
+              "name": "Air Cleaner"
+            },
+            {
+              "name": "Smart Thermostat"
+            },
+            {
+              "name": "Ecobee Doorbell"
+            },
+            {
+              "name": "UV Light"
+            },
+            {
+              "name": "Duct Cleaning"
+            }
+          ],
+          "total_amount": 10603.320000000002,
+          "monthly_payment": 134.08791377239,
+          "maple_care": 175.46991377239002
+        },
+        {
+          "size": "Eco Package #5",
+          "units": [
+            {
+              "name": "Air Conditioner"
+            },
+            {
+              "name": "Furnace"
+            },
+            {
+              "name": "Humidifier"
+            },
+            {
+              "name": "Air Cleaner"
+            },
+            {
+              "name": "Smart Thermostat"
+            },
+            {
+              "name": "Ecobee Doorbell"
+            },
+            {
+              "name": "UV Light"
+            },
+            {
+              "name": "Duct Cleaning"
+            }
+          ],
+          "total_amount": 11655.28875,
+          "monthly_payment": 147.3909448080702,
+          "maple_care": 188.7729448080702
+        },
+        {
+          "size": "Eco Package #6",
+          "units": [
+            {
+              "name": "Air Conditioner"
+            },
+            {
+              "name": "Furnace"
+            },
+            {
+              "name": "Humidifier"
+            },
+            {
+              "name": "Air Cleaner"
+            },
+            {
+              "name": "Smart Thermostat"
+            },
+            {
+              "name": "Ecobee Doorbell"
+            },
+            {
+              "name": "UV Light"
+            },
+            {
+              "name": "Duct Cleaning"
+            }
+          ],
+          "total_amount": 12095.459249999998,
+          "monthly_payment": 152.9572715858294,
+          "maple_care": 194.3392715858294
+        },
+        {
+          "size": "Eco Package #7",
+          "units": [
+            {
+              "name": "Air Conditioner"
+            },
+            {
+              "name": "Furnace"
+            },
+            {
+              "name": "Humidifier"
+            },
+            {
+              "name": "Air Cleaner"
+            },
+            {
+              "name": "Smart Thermostat"
+            },
+            {
+              "name": "Ecobee Doorbell"
+            },
+            {
+              "name": "UV Light"
+            },
+            {
+              "name": "Duct Cleaning"
+            }
+          ],
+          "total_amount": 12604.850999999999,
+          "monthly_payment": 159.398959382705,
+          "maple_care": 200.780959382705
+        },
+        {
+          "size": "Eco Package #8",
+          "units": [
+            {
+              "name": "Air Conditioner"
+            },
+            {
+              "name": "Furnace"
+            },
+            {
+              "name": "Humidifier"
+            },
+            {
+              "name": "Air Cleaner"
+            },
+            {
+              "name": "Smart Thermostat"
+            },
+            {
+              "name": "Ecobee Doorbell"
+            },
+            {
+              "name": "UV Light"
+            },
+            {
+              "name": "Duct Cleaning"
+            }
+          ],
+          "total_amount": 13391.804999999998,
+          "monthly_payment": 169.35065565282014,
+          "maple_care": 210.73265565282014
+        }
+      ]
+    }
+  ],
+  "units": [
+    {
+      "name": "Air Conditioner",
+      "category": "Unit",
+      "price": 2368.28
+    },
+    {
+      "name": "Furnace",
+      "category": "Unit",
+      "price": 2289.77
+    },
+    {
+      "name": "Humidifier",
+      "category": "Unit",
+      "price": 1575.45
+    },
+    {
+      "name": "Air Cleaner",
+      "category": "Unit",
+      "price": 2289.77
+    },
+    {
+      "name": "Smart Thermostat",
+      "category": "Unit",
+      "price": 1926.1
+    },
+    {
+      "name": "Heat-Pump",
+      "category": "Unit",
+      "price": 2705.33
+    },
+    {
+      "name": "Infinity Thermostat",
+      "category": "Unit",
+      "price": 3162.57
+    },
+    {
+      "name": "Steam Humidifier",
+      "category": "Unit",
+      "price": 3093.38
+    },
+    {
+      "name": "Tankless",
+      "category": "Service",
+      "price": 2867.0
+    },
+    {
+      "name": "Ecobee Doorbell",
+      "category": "Service",
+      "price": 2310.96
+    },
+    {
+      "name": "UV Light",
+      "category": "Service",
+      "price": 2310.96
+    },
+    {
+      "name": "Duct Cleaning",
+      "category": "Service",
+      "price": 2310.96
+    }
+  ]
+}
