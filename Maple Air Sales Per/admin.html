@@ -1,0 +1,579 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Admin Panel – Home Comfort</title>
+  <!--
+    Administrative interface for the offline home comfort site.  Sales
+    staff can adjust unit pricing, edit existing packages, add or remove
+    variants and import new configurations in bulk.  All edits are
+    persisted to localStorage so the customer facing page reflects any
+    changes.  This page should be accessed only by authorised users and
+    is intentionally not linked from the customer page.
+  -->
+  <style>
+    /* Base styles */
+    body {
+      margin: 0;
+      font-family: Arial, Helvetica, sans-serif;
+      background-color: #f7f9fc;
+      color: #333;
+    }
+    /* Navigation bar */
+    .navbar {
+      display: flex;
+      align-items: center;
+      padding: 0.8rem 1rem;
+      background-color: #002c5f;
+      color: #fff;
+      box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    }
+    .navbar img.logo {
+      height: 40px;
+      margin-right: 10px;
+    }
+    .navbar h1 {
+      font-size: 1.5rem;
+      font-weight: 600;
+    }
+    .container {
+      max-width: 1100px;
+      margin: 1rem auto;
+      padding: 0 1rem;
+    }
+    h2 {
+      margin-top: 1.5rem;
+      color: #002c5f;
+    }
+    h3 {
+      color: #002c5f;
+    }
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      background: #fff;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+      border-radius: 6px;
+      overflow: hidden;
+    }
+    table th, table td {
+      padding: 0.5rem;
+      border-bottom: 1px solid #e0e0e0;
+      text-align: left;
+    }
+    table th {
+      background-color: #e3f0fd;
+    }
+    input[type="text"], input[type="number"], select {
+      width: 100%;
+      padding: 0.3rem;
+      border: 1px solid #ccc;
+      border-radius: 4px;
+      box-sizing: border-box;
+    }
+    button {
+      padding: 0.4rem 0.8rem;
+      margin-top: 0.3rem;
+      border: none;
+      border-radius: 4px;
+      cursor: pointer;
+      font-weight: 600;
+    }
+    .btn-primary {
+      background-color: #e01c2d;
+      color: #fff;
+    }
+    .btn-danger {
+      background-color: #b00020;
+      color: #fff;
+    }
+    .btn-secondary {
+      background-color: #06529c;
+      color: #fff;
+    }
+    details {
+      background: #fff;
+      margin-bottom: 0.75rem;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+      border-radius: 4px;
+      padding: 0.5rem 0.75rem;
+    }
+    summary {
+      font-weight: bold;
+      cursor: pointer;
+      color: #e01c2d;
+    }
+    .variant {
+      border-top: 1px solid #e0e0e0;
+      padding-top: 0.5rem;
+      margin-top: 0.5rem;
+    }
+    .unit-checkbox {
+      margin-right: 0.5rem;
+    }
+  </style>
+</head>
+<body>
+  <nav class="navbar">
+    <img src="logo.png" alt="Maple Air Logo" class="logo" />
+    <h1>Admin Panel</h1>
+  </nav>
+  <div class="container">
+    <section id="unitMgmt">
+      <h2>Unit Pricing Management</h2>
+      <table id="unitTable">
+        <thead>
+          <tr>
+            <th>Name</th>
+            <th>Category</th>
+            <th>Price ($)</th>
+            <th>Actions</th>
+          </tr>
+        </thead>
+        <tbody></tbody>
+      </table>
+      <h3>Add Unit</h3>
+      <div style="display:flex; gap:0.5rem; flex-wrap:wrap;">
+        <div style="flex:2;"><input type="text" id="newUnitName" placeholder="Name" /></div>
+        <div style="flex:1;"><select id="newUnitCategory"><option value="Unit">Unit</option><option value="Accessory">Accessory</option><option value="Service">Service</option></select></div>
+        <div style="flex:1;"><input type="number" id="newUnitPrice" placeholder="Price" min="0" step="0.01" /></div>
+        <div><button class="btn-primary" id="addUnitBtn">Add</button></div>
+      </div>
+    </section>
+    <hr />
+    <section id="pkgMgmt">
+      <h2>Package Management</h2>
+      <div id="packageList"></div>
+      <button class="btn-primary" id="addPkgBtn">Add New Package</button>
+    </section>
+    <hr />
+    <section id="bulkOps">
+      <h2>Bulk Operations</h2>
+      <p>Import new packages and units from a CSV file.  The file should include the
+        columns <strong>PackageName</strong>, <strong>Size</strong>, <strong>Units</strong> (comma or semicolon separated),
+        <strong>TotalAmount</strong>, <strong>MonthlyPayment</strong> and <strong>MapleCare</strong>.  Each row
+        represents a variant.  Units not present in the system will be added
+        automatically with a default price of 0.</p>
+      <input type="file" id="bulkFile" accept=".csv" />
+      <button class="btn-secondary" id="importBtn">Import</button>
+    </section>
+  </div>
+  <script>
+    // Same data as used on the customer page.  The part numbers from the
+    // original spreadsheet have been omitted; only unit names are stored.
+    // Use fallbackData for initial load; if hvacData exists in localStorage it will overwrite
+    const fallbackData = {
+      "packages": [
+        {
+          "name": "Eco Plus Package",
+          "variants": [
+            {"size":"Eco Plus#1","units":[{"name":"Air Conditioner"},{"name":"Furnace"},{"name":"Humidifier"},{"name":"Air Cleaner"},{"name":"Smart Thermostat"}],"total_amount":10410.3195,"monthly_payment":131.6472598638002,"maple_care":158.63825986380022},
+            {"size":"Eco Plus#2","units":[{"name":"Air Conditioner"},{"name":"Furnace"},{"name":"Humidifier"},{"name":"Air Cleaner"},{"name":"Smart Thermostat"}],"total_amount":10950.838499999998,"monthly_payment":138.48257795891928,"maple_care":165.4735779589193},
+            {"size":"Eco Plus#3","units":[{"name":"Air Conditioner"},{"name":"Furnace"},{"name":"Humidifier"},{"name":"Air Cleaner"},{"name":"Smart Thermostat"}],"total_amount":10898.338499999998,"monthly_payment":137.8186712322478,"maple_care":164.8096712322478},
+            {"size":"Eco Plus#4","units":[{"name":"Air Conditioner"},{"name":"Furnace"},{"name":"Humidifier"},{"name":"Air Cleaner"},{"name":"Smart Thermostat"}],"total_amount":11138.82,"monthly_payment":140.8597623844393,"maple_care":167.8507623844393},
+            {"size":"Eco Plus#5","units":[{"name":"Air Conditioner"},{"name":"Furnace"},{"name":"Humidifier"},{"name":"Air Cleaner"},{"name":"Smart Thermostat"}],"total_amount":12336.47625,"monthly_payment":156.00513458663295,"maple_care":182.99613458663293}
+          ]
+        },
+        {
+          "name": "Hybrid Package",
+          "variants": [
+            {"size":"Hybrid#1","units":[{"name":"Furnace"},{"name":"Heat-Pump"},{"name":"Smart Thermostat"},{"name":"Humidifier"},{"name":"Air Cleaner"},{"name":"Tankless"},{"name":"Ecobee Doorbell"}],"total_amount":16593.279999999995,"monthly_payment":209.83662505102086,"maple_care":251.2166250510209},
+            {"size":"Hybrid#2","units":[{"name":"Furnace"},{"name":"Heat-Pump"},{"name":"Smart Thermostat"},{"name":"Humidifier"},{"name":"Air Cleaner"},{"name":"Tankless"},{"name":"Ecobee Doorbell"}],"total_amount":16818.279999999999,"monthly_payment":212.0475267825928,"maple_care":253.4275267825928},
+            {"size":"Hybrid#3","units":[{"name":"Furnace"},{"name":"Heat-Pump"},{"name":"Smart Thermostat"},{"name":"Humidifier"},{"name":"Air Cleaner"},{"name":"Tankless"},{"name":"Ecobee Doorbell"}],"total_amount":16592.7,"monthly_payment":209.82931645308675,"maple_care":251.20931645308677},
+            {"size":"Hybrid#4","units":[{"name":"Furnace"},{"name":"Heat-Pump"},{"name":"Smart Thermostat"},{"name":"Humidifier"},{"name":"Air Cleaner"},{"name":"Tankless"},{"name":"Ecobee Doorbell"}],"total_amount":18229.139999999996,"monthly_payment":230.05613848451889,"maple_care":271.4361384845189},
+            {"size":"Hybrid#5","units":[{"name":"Furnace"},{"name":"Heat-Pump"},{"name":"Smart Thermostat"},{"name":"Humidifier"},{"name":"Air Cleaner"},{"name":"Tankless"},{"name":"Ecobee Doorbell"}],"total_amount":18674.579999999994,"monthly_payment":235.24513197663455,"maple_care":276.6251319766345}
+          ]
+        },
+        {
+          "name": "Platinum Package",
+          "variants": [
+            {"size":"Platinum#1","units":[{"name":"Furnace"},{"name":"Heat-Pump"},{"name":"Infinity Thermostat"},{"name":"Steam Humidifier"},{"name":"Air Cleaner"},{"name":"Tankless"},{"name":"Ecobee Doorbell"}],"total_amount":28512.885,"monthly_payment":360.5704199172301,"maple_care":401.9504199172301},
+            {"size":"Platinum#2","units":[{"name":"Furnace"},{"name":"Heat-Pump"},{"name":"Infinity Thermostat"},{"name":"Steam Humidifier"},{"name":"Air Cleaner"},{"name":"Tankless"},{"name":"Ecobee Doorbell"}],"total_amount":28969.584999999996,"monthly_payment":366.56845102858883,"maple_care":407.9484510285888},
+            {"size":"Platinum#3","units":[{"name":"Furnace"},{"name":"Heat-Pump"},{"name":"Infinity Thermostat"},{"name":"Steam Humidifier"},{"name":"Air Cleaner"},{"name":"Tankless"},{"name":"Ecobee Doorbell"}],"total_amount":29105.924999999996,"monthly_payment":368.0743353032866,"maple_care":409.45433530328654},
+            {"size":"Platinum#4","units":[{"name":"Furnace"},{"name":"Heat-Pump"},{"name":"Infinity Thermostat"},{"name":"Steam Humidifier"},{"name":"Air Cleaner"},{"name":"Tankless"},{"name":"Ecobee Doorbell"}],"total_amount":32027.964999999997,"monthly_payment":405.2219216696429,"maple_care":446.60192166964285},
+            {"size":"Platinum#5","units":[{"name":"Furnace"},{"name":"Heat-Pump"},{"name":"Infinity Thermostat"},{"name":"Steam Humidifier"},{"name":"Air Cleaner"},{"name":"Tankless"},{"name":"Ecobee Doorbell"}],"total_amount":31964.595000000005,"monthly_payment":404.4926434079369,"maple_care":445.8726434079369}
+          ]
+        },
+        {
+          "name": "Elite Package",
+          "variants": [
+            {"size":"Elite#1","units":[{"name":"Air Conditioner"},{"name":"Furnace"},{"name":"Infinity Thermostat"},{"name":"Steam Humidifier"},{"name":"Air Cleaner"},{"name":"Tankless"},{"name":"Ecobee Doorbell"}],"total_amount":25963.0731,"monthly_payment":328.32614117052225,"maple_care":369.70614117052224},
+            {"size":"Elite#2","units":[{"name":"Air Conditioner"},{"name":"Furnace"},{"name":"Infinity Thermostat"},{"name":"Steam Humidifier"},{"name":"Air Cleaner"},{"name":"Tankless"},{"name":"Ecobee Doorbell"}],"total_amount":26566.3635,"monthly_payment":335.1502444950155,"maple_care":376.5302444950155},
+            {"size":"Elite#3","units":[{"name":"Air Conditioner"},{"name":"Furnace"},{"name":"Infinity Thermostat"},{"name":"Steam Humidifier"},{"name":"Air Cleaner"},{"name":"Tankless"},{"name":"Ecobee Doorbell"}],"total_amount":27409.2174,"monthly_payment":345.1151229823128,"maple_care":386.49512298231277},
+            {"size":"Elite#4","units":[{"name":"Air Conditioner"},{"name":"Furnace"},{"name":"Infinity Thermostat"},{"name":"Steam Humidifier"},{"name":"Air Cleaner"},{"name":"Tankless"},{"name":"Ecobee Doorbell"}],"total_amount":29886.7911,"monthly_payment":376.06354298653735,"maple_care":417.44354298653734},
+            {"size":"Elite#5","units":[{"name":"Air Conditioner"},{"name":"Furnace"},{"name":"Infinity Thermostat"},{"name":"Steam Humidifier"},{"name":"Air Cleaner"},{"name":"Tankless"},{"name":"Ecobee Doorbell"}],"total_amount":31674.5141,"monthly_payment":398.6957510884011,"maple_care":440.07575108840115},
+            {"size":"Elite#6","units":[{"name":"Air Conditioner"},{"name":"Furnace"},{"name":"Infinity Thermostat"},{"name":"Steam Humidifier"},{"name":"Air Cleaner"},{"name":"Tankless"},{"name":"Ecobee Doorbell"}],"total_amount":31568.3036,"monthly_payment":397.2618128902599,"maple_care":438.64181289025994},
+            {"size":"Elite#7","units":[{"name":"Air Conditioner"},{"name":"Furnace"},{"name":"Infinity Thermostat"},{"name":"Steam Humidifier"},{"name":"Air Cleaner"},{"name":"Tankless"},{"name":"Ecobee Doorbell"}],"total_amount":33202.3208,"monthly_payment":417.83050960468673,"maple_care":459.2105096046867}
+          ]
+        },
+        {
+          "name": "Furnace Package",
+          "variants": [
+            {"size":"Furnace#1","units":[{"name":"Furnace"},{"name":"Humidifier"},{"name":"Air Cleaner"},{"name":"Smart Thermostat"},{"name":"UV Light"},{"name":"Duct Cleaning"},{"name":"Ecobee Doorbell"}],"total_amount":6997.33,"monthly_payment":88.49987412973598,"maple_care":115.49087412973598},
+            {"size":"Furnace#2","units":[{"name":"Furnace"},{"name":"Humidifier"},{"name":"Air Cleaner"},{"name":"Smart Thermostat"},{"name":"UV Light"},{"name":"Duct Cleaning"},{"name":"Ecobee Doorbell"}],"total_amount":7216.08,"monthly_payment":91.1056672124481,"maple_care":118.0966672124481},
+            {"size":"Furnace#3","units":[{"name":"Furnace"},{"name":"Humidifier"},{"name":"Air Cleaner"},{"name":"Smart Thermostat"},{"name":"UV Light"},{"name":"Duct Cleaning"},{"name":"Ecobee Doorbell"}],"total_amount":7110.9088,"monthly_payment":89.86995318670172,"maple_care":116.86095318670171},
+            {"size":"Furnace#4","units":[{"name":"Furnace"},{"name":"Humidifier"},{"name":"Air Cleaner"},{"name":"Smart Thermostat"},{"name":"UV Light"},{"name":"Duct Cleaning"},{"name":"Ecobee Doorbell"}],"total_amount":7809.584,"monthly_payment":98.32155342705345,"maple_care":125.31255342705344},
+            {"size":"Furnace#5","units":[{"name":"Furnace"},{"name":"Humidifier"},{"name":"Air Cleaner"},{"name":"Smart Thermostat"},{"name":"UV Light"},{"name":"Duct Cleaning"},{"name":"Ecobee Doorbell"}],"total_amount":8560.224,"monthly_payment":107.00279918495239,"maple_care":134.9937991849524}
+          ]
+        },
+        {
+          "name": "Infinity Package",
+          "variants": [
+            {"size":"Infinity#1","units":[{"name":"Air Conditioner"},{"name":"Furnace"},{"name":"Smart Thermostat"},{"name":"Steam Humidifier"},{"name":"Air Cleaner"},{"name":"Tankless"},{"name":"Ecobee Doorbell"}],"total_amount":24993.39,"monthly_payment":316.0398799200214,"maple_care":357.4198799200214},
+            {"size":"Infinity#2","units":[{"name":"Air Conditioner"},{"name":"Furnace"},{"name":"Smart Thermostat"},{"name":"Steam Humidifier"},{"name":"Air Cleaner"},{"name":"Tankless"},{"name":"Ecobee Doorbell"}],"total_amount":24993.39,"monthly_payment":316.0398799200214,"maple_care":357.4198799200214},
+            {"size":"Infinity#3","units":[{"name":"Air Conditioner"},{"name":"Furnace"},{"name":"Smart Thermostat"},{"name":"Steam Humidifier"},{"name":"Air Cleaner"},{"name":"Tankless"},{"name":"Ecobee Doorbell"}],"total_amount":25662.39,"monthly_payment":324.39688735735294,"maple_care":365.77688735735295},
+            {"size":"Infinity#4","units":[{"name":"Air Conditioner"},{"name":"Furnace"},{"name":"Smart Thermostat"},{"name":"Steam Humidifier"},{"name":"Air Cleaner"},{"name":"Tankless"},{"name":"Ecobee Doorbell"}],"total_amount":25983.39,"monthly_payment":328.52865654765244,"maple_care":369.9086565476524},
+            {"size":"Infinity#5","units":[{"name":"Air Conditioner"},{"name":"Furnace"},{"name":"Smart Thermostat"},{"name":"Steam Humidifier"},{"name":"Air Cleaner"},{"name":"Tankless"},{"name":"Ecobee Doorbell"}],"total_amount":26652.39,"monthly_payment":336.88566398498305,"maple_care":378.265663984983},
+            {"size":"Infinity#6","units":[{"name":"Air Conditioner"},{"name":"Furnace"},{"name":"Smart Thermostat"},{"name":"Steam Humidifier"},{"name":"Air Cleaner"},{"name":"Tankless"},{"name":"Ecobee Doorbell"}],"total_amount":27493.39,"monthly_payment":347.7185951715105,"maple_care":389.09859517151053},
+            {"size":"Infinity#7","units":[{"name":"Air Conditioner"},{"name":"Furnace"},{"name":"Smart Thermostat"},{"name":"Steam Humidifier"},{"name":"Air Cleaner"},{"name":"Tankless"},{"name":"Ecobee Doorbell"}],"total_amount":28993.39,"monthly_payment":366.8667662906119,"maple_care":408.24676629061193}
+          ]
+        },
+        {
+          "name": "Eco Package",
+          "variants": [
+            {"size":"Eco#1","units":[{"name":"Air Conditioner"},{"name":"Furnace"},{"name":"Humidifier"},{"name":"Air Cleaner"},{"name":"Smart Thermostat"},{"name":"Ecobee Doorbell"},{"name":"UV Light"}],"total_amount":9759.32,"monthly_payment":123.41453508156346,"maple_care":164.80453508156347},
+            {"size":"Eco#2","units":[{"name":"Air Conditioner"},{"name":"Furnace"},{"name":"Humidifier"},{"name":"Air Cleaner"},{"name":"Smart Thermostat"},{"name":"Ecobee Doorbell"},{"name":"UV Light"}],"total_amount":10593.32,"monthly_payment":133.8632024143635,"maple_care":175.25320241436347},
+            {"size":"Eco#3","units":[{"name":"Air Conditioner"},{"name":"Furnace"},{"name":"Humidifier"},{"name":"Air Cleaner"},{"name":"Smart Thermostat"},{"name":"Ecobee Doorbell"},{"name":"UV Light"}],"total_amount":10733.32,"monthly_payment":135.43130265851698,"maple_care":176.82130265851698},
+            {"size":"Eco#4","units":[{"name":"Air Conditioner"},{"name":"Furnace"},{"name":"Humidifier"},{"name":"Air Cleaner"},{"name":"Smart Thermostat"},{"name":"Ecobee Doorbell"},{"name":"UV Light"}],"total_amount":11493.32,"monthly_payment":144.86616645593063,"maple_care":186.25616645593065},
+            {"size":"Eco#5","units":[{"name":"Air Conditioner"},{"name":"Furnace"},{"name":"Humidifier"},{"name":"Air Cleaner"},{"name":"Smart Thermostat"},{"name":"Ecobee Doorbell"},{"name":"UV Light"}],"total_amount":12793.32,"monthly_payment":161.5121627602231,"maple_care":202.9021627602231},
+            {"size":"Eco#6","units":[{"name":"Air Conditioner"},{"name":"Furnace"},{"name":"Humidifier"},{"name":"Air Cleaner"},{"name":"Smart Thermostat"},{"name":"Ecobee Doorbell"},{"name":"UV Light"}],"total_amount":12532.36,"monthly_payment":158.52847949533613,"maple_care":199.91847949533614},
+            {"size":"Eco#7","units":[{"name":"Air Conditioner"},{"name":"Furnace"},{"name":"Humidifier"},{"name":"Air Cleaner"},{"name":"Smart Thermostat"},{"name":"Ecobee Doorbell"},{"name":"UV Light"}],"total_amount":13685.45,"monthly_payment":173.2581112864576,"maple_care":214.6481112864576},
+            {"size":"Eco#8","units":[{"name":"Air Conditioner"},{"name":"Furnace"},{"name":"Humidifier"},{"name":"Air Cleaner"},{"name":"Smart Thermostat"},{"name":"Ecobee Doorbell"},{"name":"UV Light"}],"total_amount":14565.520000000002,"monthly_payment":184.38959497403336,"maple_care":225.77959497403337}
+          ]
+        }
+      ],
+      "units": [
+        {"name":"Air Conditioner","category":"Unit","price":2368.28},
+        {"name":"Furnace","category":"Unit","price":2289.77},
+        {"name":"Humidifier","category":"Unit","price":1575.45},
+        {"name":"Air Cleaner","category":"Unit","price":2289.77},
+        {"name":"Smart Thermostat","category":"Unit","price":1926.1},
+        {"name":"Heat-Pump","category":"Unit","price":2705.33},
+        {"name":"Infinity Thermostat","category":"Unit","price":3162.57},
+        {"name":"Steam Humidifier","category":"Unit","price":3093.38},
+        {"name":"Tankless","category":"Service","price":2867.0},
+        {"name":"Ecobee Doorbell","category":"Service","price":2310.96},
+        {"name":"UV Light","category":"Service","price":2310.96},
+        {"name":"Duct Cleaning","category":"Service","price":2310.96}
+      ]
+    };
+    let data = null;
+
+    function loadData() {
+      const stored = localStorage.getItem('hvacData');
+      if (stored) {
+        data = JSON.parse(stored);
+      } else {
+        // On first load use our fallback definition
+        data = fallbackData;
+        localStorage.setItem('hvacData', JSON.stringify(data));
+      }
+    }
+    function saveData() {
+      localStorage.setItem('hvacData', JSON.stringify(data));
+    }
+    // ---------- Unit management ----------
+    function renderUnits() {
+      const tbody = document.querySelector('#unitTable tbody');
+      tbody.innerHTML = '';
+      data.units.forEach((unit, idx) => {
+        const tr = document.createElement('tr');
+        // Name
+        const tdName = document.createElement('td');
+        const nameInput = document.createElement('input');
+        nameInput.type = 'text';
+        nameInput.value = unit.name;
+        nameInput.addEventListener('change', e => {
+          const oldName = unit.name;
+          unit.name = e.target.value.trim();
+          // update all package variant unit names
+          data.packages.forEach(pkg => {
+            pkg.variants.forEach(variant => {
+              variant.units = variant.units.map(u => u.name === oldName ? { name: unit.name } : u);
+            });
+          });
+          saveData();
+          renderUnits();
+          renderPackages();
+        });
+        tdName.appendChild(nameInput);
+        tr.appendChild(tdName);
+        // Category
+        const tdCat = document.createElement('td');
+        const catSelect = document.createElement('select');
+        // Allow editing of the category among Unit, Accessory and Service
+        ['Unit','Accessory','Service'].forEach(cat => {
+          const opt = document.createElement('option');
+          opt.value = cat;
+          opt.textContent = cat;
+          if (unit.category === cat) opt.selected = true;
+          catSelect.appendChild(opt);
+        });
+        catSelect.addEventListener('change', e => {
+          unit.category = e.target.value;
+          saveData();
+        });
+        tdCat.appendChild(catSelect);
+        tr.appendChild(tdCat);
+        // Price
+        const tdPrice = document.createElement('td');
+        const priceInput = document.createElement('input');
+        priceInput.type = 'number';
+        priceInput.min = 0;
+        priceInput.step = 0.01;
+        priceInput.value = unit.price;
+        priceInput.addEventListener('change', e => {
+          unit.price = parseFloat(e.target.value) || 0;
+          saveData();
+        });
+        tdPrice.appendChild(priceInput);
+        tr.appendChild(tdPrice);
+        // Actions
+        const tdAction = document.createElement('td');
+        const delBtn = document.createElement('button');
+        delBtn.textContent = 'Delete';
+        delBtn.className = 'btn-danger';
+        delBtn.addEventListener('click', () => {
+          const removedName = unit.name;
+          data.units.splice(idx, 1);
+          data.packages.forEach(pkg => {
+            pkg.variants.forEach(variant => {
+              variant.units = variant.units.filter(u => u.name !== removedName);
+            });
+          });
+          saveData();
+          renderUnits();
+          renderPackages();
+        });
+        tdAction.appendChild(delBtn);
+        tr.appendChild(tdAction);
+        tbody.appendChild(tr);
+      });
+    }
+    document.getElementById('addUnitBtn').addEventListener('click', () => {
+      const name = document.getElementById('newUnitName').value.trim();
+      const cat = document.getElementById('newUnitCategory').value;
+      const priceVal = parseFloat(document.getElementById('newUnitPrice').value) || 0;
+      if (!name) return;
+      if (data.units.some(u => u.name.toLowerCase() === name.toLowerCase())) {
+        alert('Unit already exists.');
+        return;
+      }
+      data.units.push({ name: name, category: cat, price: priceVal });
+      document.getElementById('newUnitName').value = '';
+      document.getElementById('newUnitPrice').value = '';
+      saveData();
+      renderUnits();
+    });
+    // ---------- Package management ----------
+    function renderPackages() {
+      const container = document.getElementById('packageList');
+      container.innerHTML = '';
+      data.packages.forEach((pkg, pkgIdx) => {
+        const details = document.createElement('details');
+        const summary = document.createElement('summary');
+        summary.textContent = pkg.name;
+        details.appendChild(summary);
+        pkg.variants.forEach((variant, varIdx) => {
+          const variantDiv = document.createElement('div');
+          variantDiv.className = 'variant';
+          const header = document.createElement('h4');
+          header.textContent = variant.size;
+          variantDiv.appendChild(header);
+          // Units checklist
+          const unitDiv = document.createElement('div');
+          data.units.forEach(unit => {
+            const label = document.createElement('label');
+            label.style.display = 'inline-block';
+            label.style.marginRight = '0.5rem';
+            const checkbox = document.createElement('input');
+            checkbox.type = 'checkbox';
+            checkbox.className = 'unit-checkbox';
+            checkbox.checked = variant.units.some(u => u.name === unit.name);
+            checkbox.addEventListener('change', () => {
+              if (checkbox.checked) {
+                if (!variant.units.some(u => u.name === unit.name)) {
+                  variant.units.push({ name: unit.name });
+                }
+              } else {
+                variant.units = variant.units.filter(u => u.name !== unit.name);
+              }
+              saveData();
+            });
+            const span = document.createElement('span');
+            span.textContent = unit.name;
+            label.appendChild(checkbox);
+            label.appendChild(span);
+            unitDiv.appendChild(label);
+          });
+          variantDiv.appendChild(unitDiv);
+          // Pricing inputs
+          const pricing = document.createElement('div');
+          pricing.style.display = 'flex';
+          pricing.style.gap = '0.5rem';
+          pricing.style.marginTop = '0.5rem';
+          const totalInput = document.createElement('input');
+          totalInput.type = 'number';
+          totalInput.min = 0;
+          totalInput.step = 0.01;
+          totalInput.value = variant.total_amount || 0;
+          const monthlyInput = document.createElement('input');
+          monthlyInput.type = 'number';
+          monthlyInput.min = 0;
+          monthlyInput.step = 0.0001;
+          monthlyInput.value = variant.monthly_payment || 0;
+          const mapleInput = document.createElement('input');
+          mapleInput.type = 'number';
+          mapleInput.min = 0;
+          mapleInput.step = 0.0001;
+          mapleInput.value = variant.maple_care || 0;
+          pricing.appendChild(totalInput);
+          pricing.appendChild(monthlyInput);
+          pricing.appendChild(mapleInput);
+          variantDiv.appendChild(pricing);
+          const labelsDiv = document.createElement('div');
+          labelsDiv.style.display = 'flex';
+          labelsDiv.style.gap = '0.5rem';
+          labelsDiv.style.fontSize = '0.8rem';
+          labelsDiv.style.color = '#555';
+          labelsDiv.innerHTML = '<span>Total Amount</span><span>Monthly Payment</span><span>Maple Care</span>';
+          variantDiv.appendChild(labelsDiv);
+          // Action buttons
+          const actionDiv = document.createElement('div');
+          actionDiv.style.marginTop = '0.5rem';
+          const saveBtn = document.createElement('button');
+          saveBtn.className = 'btn-secondary';
+          saveBtn.textContent = 'Save Variant';
+          saveBtn.addEventListener('click', () => {
+            variant.total_amount = parseFloat(totalInput.value) || 0;
+            variant.monthly_payment = parseFloat(monthlyInput.value) || 0;
+            variant.maple_care = parseFloat(mapleInput.value) || 0;
+            saveData();
+            alert('Variant saved');
+          });
+          actionDiv.appendChild(saveBtn);
+          const delVarBtn = document.createElement('button');
+          delVarBtn.className = 'btn-danger';
+          delVarBtn.style.marginLeft = '0.5rem';
+          delVarBtn.textContent = 'Delete Variant';
+          delVarBtn.addEventListener('click', () => {
+            if (confirm('Delete this variant?')) {
+              pkg.variants.splice(varIdx, 1);
+              saveData();
+              renderPackages();
+            }
+          });
+          actionDiv.appendChild(delVarBtn);
+          variantDiv.appendChild(actionDiv);
+          details.appendChild(variantDiv);
+        });
+        const addVariantBtn = document.createElement('button');
+        addVariantBtn.className = 'btn-primary';
+        addVariantBtn.textContent = 'Add Variant';
+        addVariantBtn.addEventListener('click', () => {
+          const sizeNum = prompt('Enter size number (e.g., 1, 2, 3):');
+          if (!sizeNum) return;
+          const baseName = pkg.name.replace(' Package','');
+          const sizeName = baseName + '#' + sizeNum;
+          pkg.variants.push({ size: sizeName, units: [], total_amount: 0, monthly_payment: 0, maple_care: 0 });
+          saveData();
+          renderPackages();
+        });
+        details.appendChild(addVariantBtn);
+        container.appendChild(details);
+      });
+    }
+    // Add new package
+    document.getElementById('addPkgBtn').addEventListener('click', () => {
+      const name = prompt('Enter name for the new package:');
+      if (!name) return;
+      if (data.packages.some(p => p.name.toLowerCase() === name.toLowerCase())) {
+        alert('Package already exists.');
+        return;
+      }
+      const pkgName = name.endsWith(' Package') ? name : name + ' Package';
+      const variantName = name + '#1';
+      data.packages.push({ name: pkgName, variants: [{ size: variantName, units: [], total_amount: 0, monthly_payment: 0, maple_care: 0 }] });
+      saveData();
+      renderPackages();
+    });
+    // ---------- Bulk import ----------
+    document.getElementById('importBtn').addEventListener('click', () => {
+      const fileInput = document.getElementById('bulkFile');
+      const file = fileInput.files[0];
+      if (!file) {
+        alert('Please select a CSV file');
+        return;
+      }
+      const reader = new FileReader();
+      reader.onload = function(e) {
+        const text = e.target.result;
+        parseCSV(text);
+      };
+      reader.readAsText(file);
+    });
+    function parseCSV(text) {
+      const lines = text.split(/\r?\n/).filter(l => l.trim());
+      if (lines.length < 2) {
+        alert('No data found in file');
+        return;
+      }
+      const header = lines[0].split(',').map(h => h.trim());
+      const idxPackage = header.findIndex(h => /packagename/i.test(h));
+      const idxSize = header.findIndex(h => /size/i.test(h));
+      const idxUnits = header.findIndex(h => /units/i.test(h));
+      const idxTotal = header.findIndex(h => /totalamount/i.test(h));
+      const idxMonthly = header.findIndex(h => /monthlypayment/i.test(h));
+      const idxMaple = header.findIndex(h => /maplecare/i.test(h));
+      if (idxPackage < 0 || idxSize < 0 || idxUnits < 0 || idxTotal < 0) {
+        alert('Missing required columns.');
+        return;
+      }
+      for (let i = 1; i < lines.length; i++) {
+        const cols = lines[i].split(',');
+        const pkgName = cols[idxPackage].trim();
+        const sizeName = cols[idxSize].trim();
+        const unitsStr = cols[idxUnits].trim();
+        const total = parseFloat(cols[idxTotal]) || 0;
+        const monthly = idxMonthly >= 0 ? parseFloat(cols[idxMonthly]) || 0 : 0;
+        const maple = idxMaple >= 0 ? parseFloat(cols[idxMaple]) || 0 : 0;
+        let pkg = data.packages.find(p => p.name.toLowerCase() === pkgName.toLowerCase());
+        if (!pkg) {
+          pkg = { name: pkgName, variants: [] };
+          data.packages.push(pkg);
+        }
+        const unitNames = unitsStr.split(/;|,/).map(u => u.trim()).filter(Boolean);
+        const unitObjects = [];
+        unitNames.forEach(uName => {
+          let unitObj = data.units.find(u => u.name.toLowerCase() === uName.toLowerCase());
+          if (!unitObj) {
+            unitObj = { name: uName, category: 'Unit', price: 0 };
+            data.units.push(unitObj);
+          }
+          unitObjects.push({ name: unitObj.name });
+        });
+        let variant = pkg.variants.find(v => v.size.toLowerCase() === sizeName.toLowerCase());
+        if (!variant) {
+          variant = { size: sizeName, units: unitObjects, total_amount: total, monthly_payment: monthly, maple_care: maple };
+          pkg.variants.push(variant);
+        } else {
+          variant.units = unitObjects;
+          variant.total_amount = total;
+          variant.monthly_payment = monthly;
+          variant.maple_care = maple;
+        }
+      }
+      saveData();
+      renderUnits();
+      renderPackages();
+      alert('Import complete');
+    }
+    // Initial render
+    loadData();
+    renderUnits();
+    renderPackages();
+  </script>
+</body>
+</html>
